@@ -3,10 +3,16 @@ import { CONNECT_DB,CLOSE_DB, GET_DB } from "./config/mongodb.js";
 import exitHook from 'async-exit-hook'
 import 'dotenv/config'
 import {APIs_v1} from './Routes/v1/index.js'
+import { errorHandlingMiddleware } from './middlewares/errorHandlingMiddleWare.js';
 const app = express()
 
 const START_SERVER = () => {
+    app.use(express.json())
+
     app.use('/v1',APIs_v1)
+
+    //Middleware handle error
+    app.use(errorHandlingMiddleware)
 
     app.get("/", async (req, res) => {
         console.log(await GET_DB().listCollections().toArray())
