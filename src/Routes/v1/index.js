@@ -1,13 +1,17 @@
 import express from "express"
 import {StatusCodes} from 'http-status-codes'
-import {userRouters} from './UserRouters.js'
+import {userRoute} from './UserRouters.js'
+import {dashboardRoute} from './dashboardRouters.js'
 
-const router = express.Router()
 
-router.get('/status',(req,res)=>{
+const Router = express.Router()
+
+Router.get('/status',(req,res)=>{
     res.status(StatusCodes.OK).json({message: 'APIs V1 are ready to use'})
 })
 
-router.use('/users',userRouters)
+Router.use('/users',userRoute)
 
-export const APIs_v1 = router
+Router.use('/dashboards',dashboardRoute)
+
+export const APIs_v1 = Router

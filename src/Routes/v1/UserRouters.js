@@ -1,13 +1,16 @@
-import express from "express"
-import {StatusCodes} from 'http-status-codes'
-import {userValidation} from '../../validations/userValidation.js'
-import {userController} from '../../controllers/userController.js'
-const router = express.Router()
+import express from "express";
+import { StatusCodes } from "http-status-codes";
+import { userValidation } from "../../validations/userValidation.js";
+import { userController } from "../../controllers/userController.js";
+const Router = express.Router();
 
-router.route('/')
-    .get((req,res) => {
-        res.status(StatusCodes.OK).json({GET:"Note: API get list user"})
-    })
-    .post(userValidation.createNew,userController.createNew)
+// API login
+Router.route("/login").post(userController.login);
 
-export const userRouters = router
+// API logout
+Router.route("/logout").delete(userController.logout);
+
+//API Resfresh Token
+Router.route("/resfresh_token").put(userController.refreshToken);
+
+export const userRoute = Router;
