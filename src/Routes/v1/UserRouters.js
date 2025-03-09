@@ -5,7 +5,7 @@ import { userController } from "../../controllers/userController.js";
 const Router = express.Router();
 
 // API login
-Router.route("/login").post(userController.login);
+Router.route("/login").post(userValidation.createNew,userController.login);
 
 // API logout
 Router.route("/logout").delete(userController.logout);

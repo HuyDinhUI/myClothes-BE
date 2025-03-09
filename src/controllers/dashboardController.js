@@ -6,7 +6,8 @@ const access = async (req, res) =>{
         console.log('req.jwtDecoded:',req.jwtDecoded)
         const userInfo ={
             id:req.jwtDecoded.id,
-            username: req.jwtDecoded.username
+            username: req.jwtDecoded.username,
+            email:req.jwtDecoded.email
         }
         res.status(StatusCodes.OK).json(userInfo)
     } catch(error){

@@ -5,7 +5,8 @@ import ms from "ms";
 const MOCK_DATABASE = {
   USER: {
     ID: "huydinh-id-12345",
-    USERNAME: "huydinh",
+    USERNAME:"huydinh",
+    EMAIL: "huydinh@gmail.com",
     PASSWORD: "huydinh@123",
   },
 };
@@ -17,6 +18,7 @@ const login = async (req, res) => {
   try {
     if (
       req.body.username !== MOCK_DATABASE.USER.USERNAME ||
+      req.body.email != MOCK_DATABASE.USER.EMAIL ||
       req.body.password !== MOCK_DATABASE.USER.PASSWORD
     ) {
       res
@@ -28,6 +30,7 @@ const login = async (req, res) => {
     const userInfo = {
       id:MOCK_DATABASE.USER.ID,
       username:MOCK_DATABASE.USER.USERNAME,
+      email:MOCK_DATABASE.USER.EMAIL
       
     }
 
