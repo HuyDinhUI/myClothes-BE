@@ -4,7 +4,7 @@ import { authMiddleware } from '../../middlewares/authMiddleware.js'
 
 const Router = express.Router()
 
-Router.route('/access')
-.get(authMiddleware.isAuthozied,dashboardController.access)
+Router.route('/info')
+.get(authMiddleware.isAuthozied,dashboardController.getUserInfo)
 
 export const dashboardRoute = Router

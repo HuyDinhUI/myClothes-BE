@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
-import { CONNECT_DB,CLOSE_DB, GET_DB } from "./config/mongodb.js";
+import { CONNECT_DB } from "./config/mongodb.js";
 import exitHook from 'async-exit-hook'
 import 'dotenv/config'
 import {APIs_v1} from './Routes/v1/index.js'
@@ -37,10 +37,6 @@ const START_SERVER = () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });
   
-    exitHook(()=>{
-      CLOSE_DB()
-      console.log("Disconnected MongoDB")
-    })
   };
 
 

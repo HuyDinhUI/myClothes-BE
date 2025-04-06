@@ -4,6 +4,8 @@ import { userValidation } from "../../validations/userValidation.js";
 import { userController } from "../../controllers/userController.js";
 const Router = express.Router();
 
+Router.route("/signup").post(userValidation.createNew,userController.signup)
+
 // API login
 Router.route("/login").post(userValidation.createNew,userController.login);
 
