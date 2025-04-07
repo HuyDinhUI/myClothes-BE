@@ -8,7 +8,7 @@ const ACCESS_TOKEN_SECRET_SIGNATURE = "KBgJwUETt4HeVD05WaXXI9V3JnwCVP";
 const REFRESH_TOKEN_SECRET_SIGNATURE = "fcCjhnpeopVn2Hg1jG75MUi62051yL";
 
 const signup = async (req, res) => {
-  const { username, email, passwordHash } = req.body;
+  const { username, email, password, comfirmPassword } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -17,42 +17,45 @@ const signup = async (req, res) => {
       return res.status(400).json({ message: "Email is existed" });
     }
 
-    const hashPassword = await bcrybt.hash(passwordHash, 10);
+    if (comfirmPassword !== password) {
+      return res.status(400).json({ message: "Password is not match" });
+    }
+
+    const hashPassword = await bcrybt.hash(password, 10);
 
     const newUser = new User({
       email,
-      passwordHash: hashPassword,
+      password: hashPassword,
       username,
     });
 
     const saved = await newUser.save();
-    res.status(201).json(saved);
+    res.status(201).json({message: "Sign up success",data:saved});
   } catch {
     res.status(500).json({ message: err.message });
   }
 };
 
 const login = async (req, res) => {
-
-  const {username, email, passwordHash} = req.body
+  const { username, email, password } = req.body;
   try {
-    const user = await User.findOne({email})
+    const user = await User.findOne({ email });
 
-    if (!user){ 
-      return res.status(400).json({message:"Email is not existing"})
+    if (!user) {
+      return res.status(400).json({ message: "Email is not existing" });
     }
 
-    const isMatchPassword = await bcrybt.compare(passwordHash, user.passwordHash)
-    
-    if (!isMatchPassword){
-      return res.status(400).json({message:"Password is wrong"})
+    const isMatchPassword = await bcrybt.compare(password, user.password);
+
+    if (!isMatchPassword) {
+      return res.status(400).json({ message: "Password is wrong" });
     }
 
     const userInfo = {
       id: user._id,
       username: user.username,
       email: user.email,
-      role: user.role
+      role: user.role,
     };
 
     const accessToken = await JwtProvider.generateToken(
@@ -82,6 +85,7 @@ const login = async (req, res) => {
     });
 
     res.status(StatusCodes.OK).json({
+      message:"Log in success",
       ...userInfo,
       accessToken,
       refreshToken,
@@ -93,12 +97,17 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    res.clearCookie('accessToken',{
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Strict',
-    })
-    res.status(StatusCodes.OK).json({ message: "Logout API success" });
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    });
+    res.clearCookie("refresh", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    });
+    res.status(StatusCodes.OK).json({ message: "Logout success" });
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
   }

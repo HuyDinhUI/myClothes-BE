@@ -5,7 +5,7 @@ const isAuthozied = async (req, res, next)=>{
     const accessTokenFromCookie = req.cookies?.accessToken
     console.log('accessTokenFromCookie: ',accessTokenFromCookie)
     if (!accessTokenFromCookie){
-        res.status(StatusCodes.UNAUTHORIZED).json({message: 'Unauthorized! Please Login'})
+        res.status(StatusCodes.UNAUTHORIZED).json({message: 'Please Login'})
         return
     }
 
@@ -26,7 +26,7 @@ const isAuthozied = async (req, res, next)=>{
             return
         }
 
-        res.status(StatusCodes.UNAUTHORIZED).json({message: 'Unauthorized! Please Login'})
+        res.status(StatusCodes.UNAUTHORIZED)
     }
 
 }

@@ -5,7 +5,7 @@ const getUserInfo = async (req, res) => {
   try {
     const userId = req.jwtDecoded.id;
 
-    const user = await User.findById(userId).select("-passwordHash");
+    const user = await User.findById(userId).select("-password");
 
     if (!user) {
       res.status(404).json({ message: "This user is not existing" });
@@ -23,7 +23,7 @@ const updateUserInfo = async (req, res) => {
     const update = await User.findByIdAndUpdate(userId, req.body, {
       new: true,
       runValidators:true
-    }).select("-passwordHash");
+    }).select("-password");
 
     if (!update) return res.status(404).json({ message: "User not found" });
     res.json(update);
