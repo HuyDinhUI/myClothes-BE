@@ -26,7 +26,7 @@ const updateUserInfo = async (req, res) => {
     }).select("-password");
 
     if (!update) return res.status(404).json({ message: "User not found" });
-    res.json(update);
+    res.status(200).json({message:"Your info is updated", update});
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
