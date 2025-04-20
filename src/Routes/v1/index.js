@@ -4,6 +4,7 @@ import {userRoute} from './UserRouters.js'
 import {dashboardRoute} from './dashboardRouters.js'
 import {productRouter} from './ProductsRouter.js'
 import {Auth0Router} from './Auth0Router.js'
+import { OauthRouter } from "./OAuthRouter.js"
 
 
 const Router = express.Router()
@@ -19,7 +20,9 @@ Router.use('/dashboards',dashboardRoute)
 Router.use('/products',productRouter)
 
 Router.use('/auth0',Auth0Router,(req,res)=>{
-    res.json({ message: "This is a protected API. You are authenticated!" })
+    return res.json({ message: "This is a protected API. You are authenticated!" })
 })
+
+Router.use('/auth',OauthRouter)
 
 export const APIs_v1 = Router
