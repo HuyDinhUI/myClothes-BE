@@ -1,11 +1,12 @@
+
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
     avatar:String,
     googleId:{ type: String, unique: true, sparse: true },
     username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, default:null},
+    email: { type: String, default:null, unique: true },
+    password: { type: String, default: null},
     fullName: String,
     address: {
       street: String,

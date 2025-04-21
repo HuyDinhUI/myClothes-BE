@@ -8,13 +8,13 @@ const ACCESS_TOKEN_SECRET_SIGNATURE = "KBgJwUETt4HeVD05WaXXI9V3JnwCVP";
 const REFRESH_TOKEN_SECRET_SIGNATURE = "fcCjhnpeopVn2Hg1jG75MUi62051yL";
 
 const signup = async (req, res) => {
-  const { username, email, password, comfirmPassword } = req.body;
+  const { username, phone, password, comfirmPassword } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ phone });
 
     if (existingUser) {
-      return res.status(400).json({ message: "Email is existed" });
+      return res.status(400).json({ message: "Phone is existed" });
     }
 
     if (comfirmPassword !== password) {
@@ -24,25 +24,25 @@ const signup = async (req, res) => {
     const hashPassword = await bcrybt.hash(password, 10);
 
     const newUser = new User({
-      email,
+      phone,
       password: hashPassword,
       username,
     });
 
     const saved = await newUser.save();
     res.status(201).json({message: "Sign up success",data:saved});
-  } catch {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
 const login = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, phone } = req.body;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ phone });
 
     if (!user) {
-      return res.status(400).json({ message: "Email is not existing" });
+      return res.status(400).json({ message: "Phone is not existing" });
     }
 
     const isMatchPassword = await bcrybt.compare(password, user.password);
