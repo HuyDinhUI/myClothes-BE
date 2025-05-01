@@ -20,7 +20,7 @@ const oauthCallback = (req, res) => {
   });
 
   // Redirect về frontend với token
-  const redirectUrl = `${process.env.FRONTEND_URL}/dashboards/Info?token=${token}`;
+  const redirectUrl = `${process.env.FRONTEND_URL}/dashboards/Account Settings?token=${token}`;
   res.redirect(redirectUrl);
 };
 
