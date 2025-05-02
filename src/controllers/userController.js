@@ -73,14 +73,14 @@ const login = async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "Strict",
       maxAge: ms("14 days"),
     });
 
     res.cookie("refresh", refreshToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "Strict",
       maxAge: ms("14 days"),
     });
 

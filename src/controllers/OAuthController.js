@@ -6,7 +6,7 @@ const oauthCallback = (req, res) => {
     {
       id: user.id,
       email: user.email,
-      name: user.name,
+      username: user.username,
     },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
@@ -15,12 +15,12 @@ const oauthCallback = (req, res) => {
   res.cookie("accessToken", token, {
     httpOnly: true,
     secure: true,
-    sameSite: "none",
+    sameSite: "Strict",
     maxAge: ms("14 days"),
   });
 
-  // Redirect về frontend với token
-  const redirectUrl = `${process.env.FRONTEND_URL}/dashboards/Account Settings?token=${token}`;
+  
+  const redirectUrl = `${process.env.FRONTEND_URL}/dashboards/Account Settings`;
   res.redirect(redirectUrl);
 };
 
