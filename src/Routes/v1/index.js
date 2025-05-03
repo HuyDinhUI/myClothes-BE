@@ -19,9 +19,9 @@ Router.use('/dashboards',dashboardRoute)
 
 Router.use('/products',productRouter)
 
-Router.use('/auth0',Auth0Router,(req,res)=>{
-    return res.json({ message: "This is a protected API. You are authenticated!" })
-})
+// Router.use('/auth0',Auth0Router,(req,res)=>{
+//     return res.json({ message: "This is a protected API. You are authenticated!" })
+// })
 
 Router.use('/auth',OauthRouter)
 
